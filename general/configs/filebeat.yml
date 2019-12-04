@@ -1,0 +1,35 @@
+# Filebeat Inputs
+filebeat.modules:
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/var/log/messages*"]
+  auth:
+    enabled: true
+    var.paths: ["/var/log/secure*"]
+- module: auditd
+  log:
+    enabled: true
+    var.paths: ["/var/log/audit/audit.log*"]
+    
+filebeat.inputs:
+- type: log
+  paths:
+    - /var/log/yum.log
+
+# Filebeat Processors
+processors:
+- add_host_metadata:
+  netinfo.enabled: true
+
+# Kibana Instance
+setup.kibana:
+  hosts: ["192.168.40.10:5601"]
+  username: "elastic"
+  password: "changeme"
+
+# Logtash Instance
+output.logstash:
+  hosts: ["192.168.40.10:5044"]
+  username: "elastic"
+  password: "changeme"

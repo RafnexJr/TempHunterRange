@@ -18,3 +18,12 @@ fi
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 cp ../files/elastic.repo /etc/yum.repos.d/
 chmod --reference=/etc/yum.repos.d/epel.repo /etc/yum.repos.d/elastic.repo
+rm /etc/audit/rules.d/audit.rules
+cp ../files/auditd-attack.rules /etc/audit/rules.d/attack.rules
+chown root:root /etc/audit/rules.d/attack.rules
+chmod --reference=/etc/audit/audit.rules /etc/audit/rules.d/attack.rules
+yum install -y filebeat
+mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.back
+cp ../configs/filebeat.yml /etc/filebeat/filebeat.yml
+chown --reference=/etc/filebeat/filebeat.yml.back /etc/filebeat/filebeat.yml
+chmod --reference=/etc/filebeat/filebeat.yml.back /etc/filebeat/filebeat.yml
