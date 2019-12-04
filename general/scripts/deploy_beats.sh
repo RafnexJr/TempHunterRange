@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Define Basic Shell Funcitons
 
@@ -14,5 +14,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Define script variables
-ELASTIC_CLOUD_ID=
-ELASTIC_CLOUD_
+
+rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+cp ../files/elastic.repo /etc/yum.repos.d/
+chmod --reference=/etc/yum.repos.d/epel.repo /etc/yum.repos.d/elastic.repo
