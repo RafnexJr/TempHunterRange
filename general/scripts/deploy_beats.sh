@@ -27,3 +27,13 @@ mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.back
 cp ../configs/filebeat.yml /etc/filebeat/filebeat.yml
 chown --reference=/etc/filebeat/filebeat.yml.back /etc/filebeat/filebeat.yml
 chmod --reference=/etc/filebeat/filebeat.yml.back /etc/filebeat/filebeat.yml
+yum install -y metricbeat
+mv /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.yml.back
+cp ../configs/metricbeat.yml /etc/metricbeat/metricbeat.yml
+chown --reference=/etc/metricbeat/metricbeat.yml.back /etc/metricbeat/metricbeat.yml
+chmod --reference=/etc/metricbeat/metricbeat.yml.back /etc/metricbeat/metricbeat.yml
+yum install -y packetbeat
+mv /etc/packetbeat/packetbeat.yml /etc/packetbeat/packetbeat.yml.back
+cp ../configs/packetbeat.yml /etc/packetbeat/packetbeat.yml
+chown --reference=/etc/packetbeat/packetbeat.yml.back /etc/packetbeat/packetbeat.yml
+chmod --reference=/etc/packetbeat/packetbeat.yml.back /etc/packetbeat/packetbeat.yml
