@@ -40,12 +40,12 @@ processors:
 
 # Kibana Instance
 setup.kibana:
-  hosts: ["127.0.0.1:5601"]
+  hosts: ["192.168.40.10:5601"]
   username: "elastic"
   password: "changeme"
 
 # Logtash Instance
 output.elasticsearch:
-  hosts: ["127.0.0.1:9200"]
+  hosts: ["192.168.40.10:9200"]
   username: "elastic"
   password: "changeme"
