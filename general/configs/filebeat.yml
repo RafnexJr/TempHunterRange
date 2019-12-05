@@ -19,8 +19,7 @@ filebeat.inputs:
 
 # Filebeat Processors
 processors:
-- add_host_metadata:
-  netinfo.enabled: true
+  - add_host_metadata: ~
 
 # Kibana Instance
 setup.kibana:
