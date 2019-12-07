@@ -16,18 +16,21 @@ fi
 # Define script variables
 
 
-yum install epel-release wget git-y
-yum install cmake3 -y
-ln -s /usr/bin/cmake3 /usr/bin/cmake
+yum install bro
 
-yum install make flex bison libpcap-devel openssl-devel python-devel swig zlib-devel -y
+mkdir -p /var/lib/bro/{host,site} /var/log/bro/{archive,sorted-logs,stats} /var/spool/bro/tmp
 
-yum install libmaxminddb-devel -y
+sed -i -e '
+    s|LogDir = /usr/logs|LogDir = /var/log/bro|;
+    s|SpoolDir = /usr/spool|SpoolDir = /var/spool/bro|;
+    ' /etc/bro/broctl.cfg
 
-git clone --recursive https://github.com/zeek/zeek
+sed -i -e 's/use_json = F/use_json = T/' /usr/share/bro/base/frameworks/logging/writers/ascii.bro
 
-cd zeek
-./configure
-make
-make install
+sudo bro deploy
 
+sudo mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.prezeek
+sudo cp ./filebeat.yml /etc/filebeat/filebeat.yml
+chown --reference=/etc/filebeat/filebeat.yml.prezeek /etc/filebeat/filebeat.yml
+chmod --reference=/etc/filebeat/filebeat.yml.prezeek /etc/filebeat/filebeat.yml
+systemctl restart filebeat

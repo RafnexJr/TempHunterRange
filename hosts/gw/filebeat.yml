@@ -1,0 +1,49 @@
+# Filebeat Inputs
+filebeat.modules:
+  - module: system
+    syslog:
+      enabled: true
+      var.paths: ["/var/log/messages*"]
+    auth:
+      enabled: true
+      var.paths: ["/var/log/secure*"]
+  - module: auditd
+    log:
+      enabled: true
+      var.paths: ["/var/log/audit/audit.log*"]
+  - module: zeek
+    connection:
+      enabled: true
+      var.paths: ["/var/log/bro/current/connection.log"]
+    dns:
+      enabled: true
+      var.paths: ["/var/log/bro/current/dns.log"]
+    http:
+      enabled: true
+      var.paths: ["/var/log/bro/current/http.log"]
+    files:
+      enabled: true
+      var.paths: ["/var/log/bro/current/files.log"]
+    ssl:
+      enabled: true
+      var.paths: ["/var/log/bro/current/ssl.log"]
+    notice:
+      enabled: true
+      var.paths: ["/var/log/bro/current/notice.log"]
+      
+filebeat.inputs:
+  - type: log
+    paths:
+      - /var/log/yum.log
+
+# Kibana Instance
+setup.kibana:
+    hosts: ["192.168.40.10:5601"]
+    username: "elastic"
+    password: "changeme"
+  
+# Logtash Instance
+output.elasticsearch:
+  hosts: ["192.168.40.10:5601"]
+  username: "elastic"
+  password: "changeme"
