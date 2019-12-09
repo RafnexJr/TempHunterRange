@@ -18,11 +18,6 @@ fi
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 cp ../files/elastic.repo /etc/yum.repos.d/
 chmod --reference=/etc/yum.repos.d/epel.repo /etc/yum.repos.d/elastic.repo
-rm /etc/audit/rules.d/audit.rules
-cp ../files/auditd-attack.rules /etc/audit/rules.d/attack.rules
-chown root:root /etc/audit/rules.d/attack.rules
-chmod --reference=/etc/audit/audit.rules /etc/audit/rules.d/attack.rules
-systemctl start auditd
 yum install -y filebeat
 mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.back
 cp ../configs/filebeat.yml /etc/filebeat/filebeat.yml
@@ -38,3 +33,11 @@ mv /etc/packetbeat/packetbeat.yml /etc/packetbeat/packetbeat.yml.back
 cp ../configs/packetbeat.yml /etc/packetbeat/packetbeat.yml
 chown --reference=/etc/packetbeat/packetbeat.yml.back /etc/packetbeat/packetbeat.yml
 chmod --reference=/etc/packetbeat/packetbeat.yml.back /etc/packetbeat/packetbeat.yml
+yum install -y auditbeat
+mv /etc/auditbeat/auditbeat.yml /etc/auditbeat/auditbeat.yml.back
+cp ../configs/auditbeat.yml /etc/auditbeat/auditbeat.yml
+cp ../files/auditd-attack.rules /etc/auditbeat/audit.rules.d/attack.conf
+chown --reference=/etc/auditbeat/audit.rules.d/sample-rules.conf.disabled /etc/auditbeat/audit.rules.d/attack.conf
+chmod --reference=/etc/auditbeat/audit.rules.d/sample-rules.conf.disabled /etc/auditbeat/audit.rules.d/attack.conf
+chown --reference=/etc/auditbeat/auditbeat.yml.back /etc/auditbeat/auditbeat.yml
+chmod --reference=/etc/auditbeat/auditbeat.yml.back /etc/auditbeat/auditbeat.yml

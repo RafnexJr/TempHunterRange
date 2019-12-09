@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  grr:
+    image: grrdocker/grr:v3.3.0.8
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    environment:
+      - EXTERNAL_HOSTNAME=localhost
+      - ADMIN_PASSWORD=demo
